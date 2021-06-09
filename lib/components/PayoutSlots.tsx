@@ -12,7 +12,13 @@ const renderPayoutSlot = (slot: CashQuantity) =>
 
 export const PayoutSlots = ({ payout }: PayoutProps) => {
   if (!payout) {
-    return <Row $empty>Your payout will appear here</Row>;
+    return (
+      <Row style={{ textAlign: 'center' }} $empty>
+        Please type withdrawal amount below.
+        <br />
+        Your payout will appear here.
+      </Row>
+    );
   }
 
   const [slot1, slot2, slot3] = dividePayout(payout || {});
