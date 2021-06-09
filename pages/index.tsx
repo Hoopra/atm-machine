@@ -5,6 +5,8 @@ import { WithdrawalInput } from '@lib/components/WithdrawalInput';
 import styled from 'styled-components';
 import { calculateCashReturn, CashQuantity, restockATM, withdrawFromStock } from '@lib/util/cashCalculator';
 import { PayoutSlots } from '@lib/components/PayoutSlots';
+import { Button } from '@lib/components/generic/Button';
+import { CurrencyEntity } from '@lib/components/Currency';
 
 const Main = styled.main({
   padding: '5rem 0',
@@ -26,6 +28,7 @@ export default function Index() {
     stock: restockATM(),
   });
   const [error, setError] = useState<string>();
+  const [showStock, setShowStock] = useState<boolean>();
 
   const { payout, stock } = cashState;
 
@@ -52,11 +55,19 @@ export default function Index() {
 
       <Main>
         <h1>World's best ATM</h1>
-        {payout && <PayoutSlots payout={payout} />}
+        <PayoutSlots payout={payout} />
 
         <WithdrawalInput onWithdraw={onWithdraw} />
         {error && <div>{error}</div>}
-        <button onClick={() => setCashState({ stock: restockATM(), payout })}>Find another ATM</button>
+        <Button onClick={() => setCashState({ stock: restockATM(), payout })}>Find another ATM</Button>
+        <Button onClick={() => setShowStock(!showStock)}>{showStock ? 'Hide' : 'Show'} current stock</Button>
+        {showStock && (
+          <div>
+            {Object.entries(stock).map(([type, quantity]) => (
+              <CurrencyEntity key={type} type={+type} quantity={quantity} />
+            ))}
+          </div>
+        )}
       </Main>
     </div>
   );

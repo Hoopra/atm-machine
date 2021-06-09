@@ -1,17 +1,9 @@
 import { ChangeEvent, useState, KeyboardEvent } from 'react';
+import { Button } from '@lib/components/generic/Button';
 import styled from 'styled-components';
 
 const Input = styled.input({
   padding: '4px',
-});
-
-const Button = styled.button({
-  padding: '4px',
-  background: 'none',
-  border: '1px solid grey',
-  margin: '8px 0',
-
-  ':hover': { background: 'lightblue' },
 });
 
 type WithdrawalInputProps = {
@@ -20,7 +12,6 @@ type WithdrawalInputProps = {
 
 export const WithdrawalInput = ({ onWithdraw }: WithdrawalInputProps) => {
   const [withdrawal, setWithdrawal] = useState<number>();
-  const [showError, setShowError] = useState(false);
 
   const onUserInput = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { value } = target;
@@ -29,10 +20,8 @@ export const WithdrawalInput = ({ onWithdraw }: WithdrawalInputProps) => {
 
   const onClick = () => {
     if (!withdrawal) {
-      setShowError(true);
       return;
     }
-    setShowError(false);
     onWithdraw?.(withdrawal);
   };
 
@@ -46,7 +35,6 @@ export const WithdrawalInput = ({ onWithdraw }: WithdrawalInputProps) => {
     <>
       <Input value={withdrawal || ``} onChange={onUserInput} onKeyUp={onEnterKey} type='number' />
       <Button onClick={onClick}>Withdraw</Button>
-      {showError && <div>Error</div>}
     </>
   );
 };
