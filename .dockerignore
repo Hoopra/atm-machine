@@ -1,0 +1,10 @@
+.next/
+.npm/
+.storybook/
+coverage/
+dist/
+node_modules/
+stories
+.storybook/
+.gitignore
+jest.config*
