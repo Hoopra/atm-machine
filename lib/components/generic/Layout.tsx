@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Row = styled.div<{ $empty?: boolean }>(({ $empty }) => ({
   width: '100%',
-  minHeight: '300px',
+  minHeight: '320px',
   ...flex({ dir: 'row', hAlign: 'center', vAlign: $empty ? 'center' : undefined }),
 }));
 

@@ -1,11 +1,14 @@
 import React from 'react';
 import { CashQuantity, dividePayout } from '@lib/util/cashCalculator';
-import { CurrencyCoin, CurrencyNote } from '@lib/components/Currency';
+import { CurrencyEntity } from '@lib/components/Currency';
 import { Column, Row } from './generic/Layout';
 
 type PayoutProps = {
   payout?: CashQuantity;
 };
+
+const renderPayoutSlot = (slot: CashQuantity) =>
+  Object.entries(slot).map(([type, quantity]) => <CurrencyEntity key={type} type={+type} quantity={quantity} />);
 
 export const PayoutSlots = ({ payout }: PayoutProps) => {
   if (!payout) {
@@ -15,21 +18,9 @@ export const PayoutSlots = ({ payout }: PayoutProps) => {
   const [slot1, slot2, slot3] = dividePayout(payout || {});
   return (
     <Row>
-      <Column>
-        {Object.entries(slot1).map(([type, quantity]) => (
-          <CurrencyNote key={type} type={+type} quantity={quantity} />
-        ))}
-      </Column>
-      <Column>
-        {Object.entries(slot2).map(([type, quantity]) => (
-          <CurrencyCoin key={type} type={+type} quantity={quantity} />
-        ))}
-      </Column>
-      <Column>
-        {Object.entries(slot3).map(([type, quantity]) => (
-          <CurrencyCoin key={type} type={+type} quantity={quantity} />
-        ))}
-      </Column>
+      <Column>{renderPayoutSlot(slot1)}</Column>
+      <Column>{renderPayoutSlot(slot2)}</Column>
+      <Column>{renderPayoutSlot(slot3)}</Column>
     </Row>
   );
 };

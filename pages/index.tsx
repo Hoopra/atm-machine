@@ -9,7 +9,7 @@ import { Button } from '@lib/components/generic/Button';
 import { CurrencyEntity } from '@lib/components/Currency';
 
 const Main = styled.main({
-  padding: '5rem 0',
+  padding: '2rem 0',
   margin: '2rem 0',
   display: 'flex',
   flex: 1,
@@ -17,6 +17,8 @@ const Main = styled.main({
   justifyContent: 'center',
   alignItems: 'center',
 });
+
+const Heading = styled.h1({ margin: '24px 0' });
 
 type ATMState = {
   stock: CashQuantity;
@@ -54,7 +56,7 @@ export default function Index() {
       </Head>
 
       <Main>
-        <h1>World's best ATM</h1>
+        <Heading>World's best ATM</Heading>
         <PayoutSlots payout={payout} />
 
         <WithdrawalInput onWithdraw={onWithdraw} />
@@ -62,9 +64,9 @@ export default function Index() {
         <Button onClick={() => setCashState({ stock: restockATM(), payout })}>Find another ATM</Button>
         <Button onClick={() => setShowStock(!showStock)}>{showStock ? 'Hide' : 'Show'} current stock</Button>
         {showStock && (
-          <div>
+          <div style={{ margin: '32px' }}>
             {Object.entries(stock).map(([type, quantity]) => (
-              <CurrencyEntity key={type} type={+type} quantity={quantity} />
+              <CurrencyEntity key={type} type={+type} quantity={quantity} style={{ padding: '8px' }} />
             ))}
           </div>
         )}
